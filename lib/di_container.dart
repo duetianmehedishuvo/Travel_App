@@ -1,7 +1,9 @@
 import 'package:demo/data/datasource/remote/dio/dio_client.dart';
 import 'package:demo/data/datasource/remote/dio/logging_interceptor.dart';
 import 'package:demo/data/repository/auth_repo.dart';
+import 'package:demo/data/repository/profile_repo.dart';
 import 'package:demo/provider/auth_provider.dart';
+import 'package:demo/provider/profile_provider.dart';
 import 'package:demo/utilites/app_constant.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -16,9 +18,11 @@ Future<void> init() async {
 
   // Repository
   sl.registerLazySingleton(() => AuthRepo(dioClient: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton(() => ProfileRepo(dioClient: sl()));
 
   // Provider
   sl.registerFactory(() => AuthProvider(authRepo: sl()));
+  sl.registerFactory(() => ProfileProvider(profileRepo: sl()));
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();

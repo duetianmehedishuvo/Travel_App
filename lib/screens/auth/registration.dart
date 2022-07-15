@@ -92,7 +92,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     padding: const EdgeInsets.symmetric(horizontal: 20),
                                     child: Column(
                                       children: [
-                                        CustomTextfield(
+                                        CustomTextfield1(
                                           readOnly: false,
                                           obscureText: false,
                                           title: "Full Name",
@@ -102,7 +102,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         SizedBox(
                                           height: 15,
                                         ),
-                                        CustomTextfield(
+                                        CustomTextfield1(
                                           readOnly: false,
                                           obscureText: false,
                                           title: "Your email address",
@@ -136,7 +136,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                             ),
                                           ),
                                         ),
-                                        CustomTextfield(
+                                        CustomTextfield1(
                                           Controller: passwordController,
                                           color: PColor.socialLogoButtonColor,
                                           title: "Password",
@@ -153,7 +153,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         SizedBox(
                                           height: 15,
                                         ),
-                                        CustomTextfield(
+                                        CustomTextfield1(
                                             readOnly: false,
                                             obscureText: false,
                                             Controller: confirmPasswordController,
@@ -168,7 +168,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   SizedBox(
                                     width: 150,
                                     height: 50,
-                                    child: SubmitButton(
+                                    child: CustomButton(
                                       onTap: () {
                                         signUP(context, authProvider);
                                       },

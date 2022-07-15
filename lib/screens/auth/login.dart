@@ -103,7 +103,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                         padding: const EdgeInsets.symmetric(horizontal: 20),
                                         child: Column(
                                           children: [
-                                            CustomTextfield(
+                                            CustomTextfield1(
                                               readOnly: false,
                                               obscureText: false,
                                               title: "Your email address",
@@ -113,7 +113,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                             SizedBox(
                                               height: 15,
                                             ),
-                                            CustomTextfield(
+                                            CustomTextfield1(
                                               Controller: passwordController,
                                               color: PColor.socialLogoButtonColor,
                                               title: "A secure password",
@@ -136,7 +136,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                       SizedBox(
                                           width: 150,
                                           height: 50,
-                                          child: SubmitButton(
+                                          child: CustomButton(
                                             onTap: () {
                                               login(context, authProvider);
                                             },

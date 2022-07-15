@@ -27,6 +27,7 @@ const  MaterialColor primarySwatch = MaterialColor(
 );
 
 const Color kPrimaryColor = Color(0xFF00adbb);
+const Color kButtonColor = Color(0xff08BA64);
 const Color scaffoldBackgroundColor = Color(0xFFFFFFFF);
 const Color whiteColor = Color(0xFFFFFFFF);
 const Color lightWhiteColor = Color(0xFFfafafa);
@@ -64,7 +65,6 @@ const Color textGreyColor =  Color(0xFF808080);
 const Color textGreyColor2 =  Color(0xFF707070);
 const Color textRedColor =  Color(0xFFFF464C);
 
-const Color kButtonColor = Color(0xFFC51F30);
 const Color kBackgroundColor = Colors.white;
 const Color kBlackColor = Colors.black;
 const Color kTextFieldBackground = Color(0xFFF9F6F6);

@@ -1,4 +1,5 @@
 import 'package:demo/provider/auth_provider.dart';
+import 'package:demo/provider/profile_provider.dart';
 import 'package:demo/screens/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<ProfileProvider>()),
     ],
     child: MyApp(),
   ));

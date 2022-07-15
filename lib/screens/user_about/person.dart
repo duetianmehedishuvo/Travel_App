@@ -209,7 +209,7 @@ class PersonScreen extends StatelessWidget {
                                    SizedBox(
                                      width: 160,
                                      height: 50,
-                                     child: SubmitButton(
+                                     child: CustomButton(
                                       title: "Buy Subscription",size: 16, 
                                       color: PColor.submitButtonColor, 
                                       onTap: (){}

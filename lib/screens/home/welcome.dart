@@ -1,5 +1,4 @@
-import 'package:demo/screens/auth/social_logo.dart';
-import 'package:demo/screens/home/home.dart';
+import 'package:demo/screens/auth/login.dart';
 import 'package:demo/screens/utilitis/constant/color.dart';
 import 'package:demo/screens/utilitis/submit_button.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +11,7 @@ class Welcome extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/sign_back.jpeg"),
-                  fit: BoxFit.cover)),
+          decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/sign_back.jpeg"), fit: BoxFit.cover)),
           child: Container(
             width: double.infinity,
             height: MediaQuery.of(context).size.height,
@@ -31,17 +27,11 @@ class Welcome extends StatelessWidget {
                         children: [
                           Text(
                             "Welcome to the",
-                            style: TextStyle(
-                                fontSize: 32,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700),
+                            style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w700),
                           ),
                           Text(
                             "World of Discounts",
-                            style: TextStyle(
-                                fontSize: 32,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700),
+                            style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w700),
                           ),
                         ],
                       ),
@@ -50,10 +40,7 @@ class Welcome extends StatelessWidget {
                           Text(
                             "Make your travel simple.Get awesome deals and save more than 60% of travel cost! Enjoy youre Traveling!",
                             textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400),
+                            style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400),
                           ),
                           SizedBox(
                             height: 20,
@@ -70,14 +57,10 @@ class Welcome extends StatelessWidget {
                           Container(
                               width: double.infinity,
                               height: 56,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: SubmitButton(
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                              child: CustomButton(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => HomeScreen()));
+                                    Navigator.push(context, MaterialPageRoute(builder: (_) => LogInScreen()));
                                   },
                                   title: "Get Started",
                                   size: 18,

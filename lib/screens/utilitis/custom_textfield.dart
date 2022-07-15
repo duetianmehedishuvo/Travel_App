@@ -1,7 +1,8 @@
+import 'package:demo/utilites/colors.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextfield extends StatelessWidget {
-  CustomTextfield(
+class CustomTextfield1 extends StatelessWidget {
+  CustomTextfield1(
       {Key? key, required this.Controller, required this.color, required this.title, required this.obscureText, required this.readOnly, this.icon})
       : super(key: key);
 
@@ -18,16 +19,15 @@ class CustomTextfield extends StatelessWidget {
       readOnly: readOnly,
       obscureText: obscureText,
       controller: Controller,
+      style: TextStyle(color: whiteColor),
       decoration: InputDecoration(
         filled: true,
         fillColor: color,
         suffixIcon: icon,
-        labelStyle: TextStyle(
-          color: Colors.white,
-        ),
+        labelStyle: TextStyle(color: Colors.white),
         hintText: title,
         hintStyle: TextStyle(
-          color: Colors.white,
+          color: Colors.white.withOpacity(.6),
         ),
         border: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.teal),

@@ -78,7 +78,7 @@ class SocialLogoScreen extends StatelessWidget {
                                 border: Border.all(color: Color(0xffEEEFED).withOpacity(0.3)),
                                 borderRadius: BorderRadius.circular(18),
                               ),
-                              child: SubmitButton(
+                              child: CustomButton(
                                   onTap: () {
                                     Navigator.push(context, MaterialPageRoute(builder: (_) => LogInScreen()));
                                   },

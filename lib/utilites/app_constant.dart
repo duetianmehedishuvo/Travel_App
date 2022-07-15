@@ -7,7 +7,7 @@ class AppConstant {
   static const String login = "login";
   static const String signup = "registration";
   static const String forgotPasswordURI = "auth/forget-password";
-  static const String realEstateURI = "real-estate/listings";
+  static const String userProfileUri = "authenticate-user";
   static const String carURI = "car/mobile";
 
   // Shared Key

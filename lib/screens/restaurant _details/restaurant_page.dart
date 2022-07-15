@@ -283,7 +283,7 @@ class RestaurantScreen extends StatelessWidget {
                                 width: double.infinity,
                                 height: 56,
                                
-                                child:SubmitButton(
+                                child:CustomButton(
                                   title: "Claim 50% Discount",size: 18, 
                                   color: PColor.submitButtonColor,
                                   onTap: (){},
