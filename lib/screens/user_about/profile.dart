@@ -20,6 +20,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController _dobController = TextEditingController();
+  TextEditingController _dob1Controller = TextEditingController();
   TextEditingController _genderController = new TextEditingController();
   TextEditingController _nameController = new TextEditingController();
   TextEditingController _phoneController = new TextEditingController();
