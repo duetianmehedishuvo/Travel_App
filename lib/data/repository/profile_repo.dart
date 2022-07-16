@@ -47,4 +47,14 @@ class ProfileRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
+  Future<ApiResponse> uploadProfile(Map<String, dynamic> map) async {
+    Response response = Response(requestOptions: RequestOptions(path: '22222'));
+    try {
+      response = await dioClient.post('${AppConstant.baseUrl}${AppConstant.userUpdateURI}', data: map);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      print('sssjjs ${e.toString()}');
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
+    }
+  }
 }

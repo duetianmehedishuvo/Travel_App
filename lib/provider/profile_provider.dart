@@ -94,4 +94,17 @@ class ProfileProvider with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  updateProfile(BuildContext context, Map<String, dynamic> map) async {
+    _isLoading = true;
+    notifyListeners();
+    ApiResponse apiResponse = await profileRepo.uploadProfile(map);
+    _isLoading = false;
+    if (apiResponse.response.statusCode == 200) {
+      getUserProfiles(context);
+    } else {
+      Helper.showSnack(context,'The phone has already been taken.');
+    }
+    notifyListeners();
+  }
 }

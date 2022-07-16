@@ -28,7 +28,6 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController _dobController = TextEditingController();
-  TextEditingController _dob1Controller = TextEditingController();
   TextEditingController _genderController = new TextEditingController();
   TextEditingController _nameController = new TextEditingController();
   TextEditingController _phoneController = new TextEditingController();
@@ -51,7 +50,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   File? file;
   final picker = ImagePicker();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _choose() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50, maxHeight: 500, maxWidth: 500);
@@ -64,6 +62,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Helper.showSnack(context, 'No Image Selected');
       }
     });
+  }
+
+  _updateProfile() {
+    if (_nameController.text.isEmpty ||
+        _dobController.text.isEmpty ||
+        _genderController.text.isEmpty ||
+        _cityController.text.isEmpty ||
+        _phoneController.text.isEmpty) {
+      Helper.showSnack(context, 'All Fields are required');
+    } else {
+      Map<String, dynamic> map = {
+        "name": _nameController.text,
+        "gender": _genderController.text,
+        "address": _cityController.text,
+        "phone": _phoneController.text,
+        "date_of_birth": _dobController.text,
+        "city": _cityController.text,
+        "location": _cityController.text
+      };
+
+      Provider.of<ProfileProvider>(context, listen: false).updateProfile(context, map);
+    }
   }
 
   @override
@@ -94,7 +114,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              child: FloatingActionButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Icon(Icons.arrow_back),
+                                  backgroundColor: kPrimaryColor.withOpacity(.4)),
+                            ),
+                          ),
                           Expanded(
                             child: SingleChildScrollView(
                               physics: BouncingScrollPhysics(),
@@ -146,9 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             ],
                                           ),
                                         ),
-                                        SizedBox(
-                                          height: 49,
-                                        ),
+                                        SizedBox(height: 49),
                                         Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 20),
                                           child: Column(
@@ -340,11 +372,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               height: 50,
                               width: 140,
                               child: CustomButton(
-                                  title: "Continue",
+                                  title: "Update",
                                   size: 16,
                                   color: PColor.submitButtonColor,
                                   onTap: () {
-                                    Navigator.of(context).pop();
+                                    _updateProfile();
                                   }),
                             ),
                           )
