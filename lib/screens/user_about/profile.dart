@@ -1,12 +1,20 @@
+import 'dart:io';
+
 import 'package:demo/provider/profile_provider.dart';
 import 'package:demo/screens/user_about/widget/change_password_dialog.dart';
 import 'package:demo/screens/utilitis/constant/color.dart';
 import 'package:demo/screens/utilitis/custom_textfield.dart';
 import 'package:demo/screens/utilitis/submit_button.dart';
+import 'package:demo/utilites/app_constant.dart';
+import 'package:demo/utilites/colors.dart';
+import 'package:demo/utilites/helper.dart';
 import 'package:demo/utilites/images.dart';
 import 'package:demo/widgets/animated_custom_dialog.dart';
+import 'package:demo/widgets/app_widget.dart';
+import 'package:demo/widgets/custom_loader.dart';
 import 'package:demo/widgets/custom_parent_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +49,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
   }
 
+  File? file;
+  final picker = ImagePicker();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _choose() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery, imageQuality: 50, maxHeight: 500, maxWidth: 500);
+    setState(() {
+      if (pickedFile != null) {
+        file = File(pickedFile.path);
+        // Provider.of<ProfileProvider>(context, listen: false).updateUserInfo( file!);
+        Provider.of<ProfileProvider>(context, listen: false).updateProfileImage(context, file!);
+      } else {
+        Helper.showSnack(context, 'No Image Selected');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Provider.of<ProfileProvider>(context, listen: false).getUserProfiles(context);
@@ -53,9 +78,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               if (!profileProvider.isLoading && profileProvider.user != null) {
                 _nameController.text = profileProvider.user!.name!;
                 _phoneController.text = profileProvider.user!.phone!;
-                _cityController.text = profileProvider.user!.address!;
+                _cityController.text = profileProvider.user!.city!;
+                _dobController.text = profileProvider.user!.dateOfBirth!;
                 _genderController.text = profileProvider.user!.gender!.isEmpty ? "Male" : profileProvider.user!.gender!;
-                // newPasswordController.text = '';
+                // newPasswordController.text = ''; https://travels.dd.limited/uploads/user/1657987237_62d2e0a55f3f0.png
                 // passwordController.text = '';
               }
 
@@ -86,23 +112,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     padding: const EdgeInsets.only(top: 80),
                                     child: Column(
                                       children: [
-                                        Stack(
-                                          children: [
-                                            InkWell(
-                                              onTap: () {},
-                                              child: CircleAvatar(
-                                                radius: 60,
-                                                backgroundColor: Colors.teal,
-                                              ),
-                                            ),
-                                            Transform.translate(
-                                              offset: Offset(93, 90),
-                                              child: CircleAvatar(
-                                                radius: 10,
-                                                backgroundColor: Colors.white,
-                                              ),
-                                            ),
-                                          ],
+                                        Container(
+                                          alignment: Alignment.center,
+                                          padding: const EdgeInsets.all(3),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(color: kPrimaryColor.withOpacity(.6), width: 1), shape: BoxShape.circle),
+                                          child: Stack(
+                                            clipBehavior: Clip.none,
+                                            children: [
+                                              !profileProvider.isLoading && file == null
+                                                  ? getCircularImage(100, '${AppConstant.imageBaseUrl}${profileProvider.user!.image}')
+                                                  : file != null && !profileProvider.isLoading
+                                                      ? ClipRRect(
+                                                          borderRadius: BorderRadius.circular(50),
+                                                          child: Image.file(file!, width: 100, height: 100, fit: BoxFit.fill))
+                                                      : const CustomLoader(),
+                                              !profileProvider.isLoading
+                                                  ? Positioned(
+                                                      bottom: 0,
+                                                      right: -10,
+                                                      child: CircleAvatar(
+                                                        backgroundColor: Color(0xFFfe9585),
+                                                        radius: 20,
+                                                        child: IconButton(
+                                                            onPressed: () {
+                                                              _choose();
+                                                            },
+                                                            padding: const EdgeInsets.all(0),
+                                                            icon: const Icon(Icons.edit, color: Colors.white, size: 18)),
+                                                      ),
+                                                    )
+                                                  : const SizedBox.shrink(),
+                                            ],
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 49,
@@ -139,23 +181,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   ),
                                                 ),
                                               ),
-                                              // CustomTextfield(
-                                              //   readOnly: true,
-                                              //   obscureText: false,
-                                              //   Controller: _dobController,
-                                              //   color: PColor.socialLogoButtonColor,
-                                              //   title: "Date of Birth ",
-                                              //   icon: IconButton(
-                                              //     onPressed: () => _selectDateFromPicker(context),
-                                              //     icon: Icon(
-                                              //       Icons.calendar_today_outlined,
-                                              //       color: Colors.white.withOpacity(0.4),
-                                              //     ),
-                                              //   ),
-                                              // ),
-                                              // SizedBox(
-                                              //   height: 15,
-                                              // ),
+                                              CustomTextfield1(
+                                                readOnly: true,
+                                                obscureText: false,
+                                                Controller: _dobController,
+                                                color: PColor.socialLogoButtonColor,
+                                                title: "Date of Birth ",
+                                                icon: IconButton(
+                                                  onPressed: () => _selectDateFromPicker(context),
+                                                  icon: Icon(
+                                                    Icons.calendar_today_outlined,
+                                                    color: Colors.white.withOpacity(0.4),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 15,
+                                              ),
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                 children: [
@@ -265,7 +307,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       })
                                                 ],
                                               ),
-
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.end,
                                                 children: [

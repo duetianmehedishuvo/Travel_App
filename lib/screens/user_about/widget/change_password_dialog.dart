@@ -16,7 +16,11 @@ class ChangePasswordDialog extends StatelessWidget {
     if (passwordController.text.isEmpty || newPasswordController.text.isEmpty) {
       Helper.showSnack(context, 'Password field are required');
     } else {
-      Map<String, dynamic> map = {"old": passwordController.text, "password": newPasswordController.text};
+      Map<String, dynamic> map = {
+        "current_password": passwordController.text,
+        "new_password": newPasswordController.text,
+        "password_confirmation": newPasswordController.text
+      };
       Provider.of<ProfileProvider>(context, listen: false).updatePassword(context, map, (bool status) {
         if (status == true) {
           Navigator.of(context).pop();

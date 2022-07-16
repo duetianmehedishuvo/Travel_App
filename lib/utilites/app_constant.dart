@@ -4,11 +4,13 @@
 class AppConstant {
   // API BASE URL
   static const String baseUrl = "https://travels.dd.limited/api/";
+  static const String imageBaseUrl = "https://travels.dd.limited";
   static const String login = "login";
   static const String signup = "registration";
   static const String forgotPasswordURI = "auth/forget-password";
   static const String userProfileUri = "authenticate-user";
   static const String carURI = "car/mobile";
+  static const String userUpdateURI = "user-info-update";
 
   // Shared Key
   static const String theme = 'theme';

@@ -18,7 +18,7 @@ Future<void> init() async {
 
   // Repository
   sl.registerLazySingleton(() => AuthRepo(dioClient: sl(), sharedPreferences: sl()));
-  sl.registerLazySingleton(() => ProfileRepo(dioClient: sl()));
+  sl.registerLazySingleton(() => ProfileRepo(dioClient: sl(),authRepo: sl()));
 
   // Provider
   sl.registerFactory(() => AuthProvider(authRepo: sl()));

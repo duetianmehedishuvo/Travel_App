@@ -1,22 +1,21 @@
 class UserModel {
   UserModel({
-    this.id,
-    this.name,
-    this.email,
-    this.emailVerifiedAt,
-    this.image,
-    this.gender,
-    this.address,
-    this.phone,
-    this.dateOfBirth,
-    this.city,
-    this.location,
-    this.status,
-    this.createdAt,
-    this.updatedAt,
-    this.favourites,
-    this.reviews,
-  });
+      this.id, 
+      this.name, 
+      this.email, 
+      this.emailVerifiedAt, 
+      this.image, 
+      this.gender, 
+      this.address, 
+      this.phone, 
+      this.dateOfBirth, 
+      this.city, 
+      this.location, 
+      this.status, 
+      this.createdAt, 
+      this.updatedAt, 
+      this.favourites, 
+      this.reviews,});
 
   UserModel.fromJson(dynamic json) {
     id = json['id'];
@@ -41,10 +40,11 @@ class UserModel {
     }
     if (json['reviews'] != null) {
       reviews = [];
-      json['reviews'].forEach((v) {});
+      json['reviews'].forEach((v) {
+
+      });
     }
   }
-
   int? id;
   String? name;
   String? email;
@@ -86,6 +86,7 @@ class UserModel {
     }
     return map;
   }
+
 }
 
 class Favourites {
