@@ -50,10 +50,10 @@ class AuthProvider with ChangeNotifier {
 
   // for sign up section
 
-  Future signUP(String name, String phone, String email, String password, Function callback) async {
+  Future signUP(String name, String phone, String email, String password,String gender,String dob,String city, Function callback) async {
     _isLoading = true;
     notifyListeners();
-    ApiResponse apiResponse = await authRepo.signUp(name, phone, email, password);
+    ApiResponse apiResponse = await authRepo.signUp(name, phone, email, password,gender,dob,city);
     _isLoading = false;
 
     if (apiResponse.response.statusCode == 200) {

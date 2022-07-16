@@ -25,6 +25,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
+  TextEditingController genderController = new TextEditingController();
+  TextEditingController cityController = new TextEditingController();
+  var items = ["Male", "Female", "Other"];
+
   bool istap = false;
   final formKey = GlobalKey<FormState>();
 
@@ -34,11 +39,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           phoneController.text.isEmpty ||
           emailController.text.isEmpty ||
           passwordController.text.isEmpty ||
+          dobController.text.isEmpty ||
+          genderController.text.isEmpty ||
+          cityController.text.isEmpty ||
           confirmPasswordController.text.isEmpty) {
         Helper.showSnack(context, 'Please fill up all the field');
+      } else if (passwordController.text != confirmPasswordController.text) {
+        Helper.showSnack(context, 'Password doesn\'t match');
       } else {
         authProvider.signUP(nameController.text, phoneController.text, emailController.text.toString(), confirmPasswordController.text.toString(),
-            (bool isLogin, String message) async {
+            genderController.text, dobController.text,cityController.text, (bool isLogin, String message) async {
           if (isLogin) {
             Helper.toRemoveUntiScreen(context, LogInScreen());
             Helper.showSnack(context, message);
@@ -48,6 +58,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         });
       }
     }
+  }
+
+  Future<void> _selectDateFromPicker(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime(DateTime.now().year - 20),
+        firstDate: DateTime(DateTime.now().year - 30),
+        lastDate: DateTime(DateTime.now().year + 20));
+    if (picked != null)
+      setState(() {
+        dobController.text = "${picked.day}/ ${picked.month}/ ${picked.year}";
+      });
   }
 
   @override
@@ -99,9 +121,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           Controller: nameController,
                                           color: PColor.textfieldColor,
                                         ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
+                                        SizedBox(height: 15),
                                         CustomTextfield1(
                                           readOnly: false,
                                           obscureText: false,
@@ -109,9 +129,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           Controller: emailController,
                                           color: PColor.textfieldColor,
                                         ),
-                                        SizedBox(
-                                          height: 15,
+                                        SizedBox(height: 15),
+                                        CustomTextfield1(
+                                          readOnly: false,
+                                          obscureText: false,
+                                          title: "Your City",
+                                          Controller: cityController,
+                                          color: PColor.textfieldColor,
                                         ),
+                                        SizedBox(height: 15),
                                         IntlPhoneField(
                                           controller: phoneController,
                                           style: TextStyle(color: Colors.white),
@@ -135,6 +161,54 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                               borderRadius: BorderRadius.circular(25.0),
                                             ),
                                           ),
+                                        ),
+                                        CustomTextfield1(
+                                          Controller: genderController,
+                                          color: PColor.socialLogoButtonColor,
+                                          title: "Gender",
+                                          obscureText: false,
+                                          readOnly: true,
+                                          icon: PopupMenuButton<String>(
+                                            color: Colors.white,
+                                            icon: const Icon(
+                                              Icons.arrow_drop_down,
+                                              color: Colors.black,
+                                            ),
+                                            onSelected: (String value) {
+                                              genderController.text = value;
+                                            },
+                                            itemBuilder: (BuildContext context) {
+                                              return items.map<PopupMenuItem<String>>((String value) {
+                                                return new PopupMenuItem(
+                                                    child: Column(
+                                                      children: [
+                                                        new Text(
+                                                          value,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    value: value);
+                                              }).toList();
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(height: 15),
+                                        CustomTextfield1(
+                                          readOnly: true,
+                                          obscureText: false,
+                                          Controller: dobController,
+                                          color: PColor.socialLogoButtonColor,
+                                          title: "Date of Birth ",
+                                          icon: IconButton(
+                                            onPressed: () => _selectDateFromPicker(context),
+                                            icon: Icon(
+                                              Icons.calendar_today_outlined,
+                                              color: Colors.white.withOpacity(0.4),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 15,
                                         ),
                                         CustomTextfield1(
                                           Controller: passwordController,

@@ -1,4 +1,5 @@
 import 'package:demo/provider/auth_provider.dart';
+import 'package:demo/screens/auth/social_logo.dart';
 import 'package:demo/screens/home/home.dart';
 import 'package:demo/screens/user_about/profile.dart';
 import 'package:demo/screens/utilitis/constant/color.dart';
@@ -71,92 +72,101 @@ class _LogInScreenState extends State<LogInScreen> {
                 child: SafeArea(
                   child: Scaffold(
                       backgroundColor: Colors.black,
-                      body: SingleChildScrollView(
-                        child: Form(
-                          key: formKey,
-                          child: Container(
-                            decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/login_back.jpeg"), fit: BoxFit.cover)),
-                            child: Container(
-                              padding: EdgeInsets.only(top: 30),
-                              width: double.infinity,
-                              height: MediaQuery.of(context).size.height,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Image.asset("assets/travel_logo.png"),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        "Email sign in",
-                                        style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w700),
-                                      ),
-                                      Divider(
-                                        color: Colors.white.withOpacity(0.5),
-                                        thickness: 2,
-                                        indent: 180,
-                                        endIndent: 180,
-                                      ),
-                                      SizedBox(
-                                        height: 49,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                                        child: Column(
+                      body: Container(
+                        decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/login_back.jpeg"), fit: BoxFit.cover)),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                child: Form(
+                                  key: formKey,
+                                  child: Container(
+                                    padding: EdgeInsets.only(top: 10),
+                                    width: double.infinity,
+                                    height: MediaQuery.of(context).size.height,
+                                    child: Column(
+                                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Image.asset("assets/travel_logo.png", height: 90, width: 90),
+                                        SizedBox(height: 15),
+                                        Column(
                                           children: [
-                                            CustomTextfield1(
-                                              readOnly: false,
-                                              obscureText: false,
-                                              title: "Your email address",
-                                              Controller: emailController,
-                                              color: Color(0xffF7F7F7).withOpacity(0.4),
+                                            Text("Email sign in", style: TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.w700)),
+                                            Divider(color: Colors.white.withOpacity(0.5), thickness: 2, indent: 180, endIndent: 180),
+                                            SizedBox(height: 49),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                                              child: Column(
+                                                children: [
+                                                  CustomTextfield1(
+                                                    readOnly: false,
+                                                    obscureText: false,
+                                                    title: "Your email address",
+                                                    Controller: emailController,
+                                                    color: Color(0xffF7F7F7).withOpacity(0.4),
+                                                  ),
+                                                  SizedBox(height: 15),
+                                                  CustomTextfield1(
+                                                    Controller: passwordController,
+                                                    color: PColor.socialLogoButtonColor,
+                                                    title: "A secure password",
+                                                    obscureText: !istap,
+                                                    readOnly: false,
+                                                    icon: InkWell(
+                                                      onTap: _togglePasswordView,
+                                                      child: Icon(
+                                                        istap ? Icons.visibility : Icons.visibility_off,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                            SizedBox(
-                                              height: 15,
-                                            ),
-                                            CustomTextfield1(
-                                              Controller: passwordController,
-                                              color: PColor.socialLogoButtonColor,
-                                              title: "A secure password",
-                                              obscureText: !istap,
-                                              readOnly: false,
-                                              icon: InkWell(
-                                                onTap: _togglePasswordView,
-                                                child: Icon(
-                                                  istap ? Icons.visibility : Icons.visibility_off,
-                                                  color: Colors.white,
+                                            SizedBox(height: 10),
+                                            Container(
+                                              alignment: Alignment.centerRight,
+                                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                                              child: TextButton(
+                                                onPressed: () {},
+                                                child: Text(
+                                                  "Forgot password?",
+                                                  style: TextStyle(color: Color(0xff08BA64), fontSize: 18),
                                                 ),
                                               ),
-                                            )
+                                            ),
+                                            SizedBox(height: 20),
+                                            TextButton(
+                                              onPressed: () {
+                                                Helper.toScreen(context, SocialLogoScreen());
+                                              },
+                                              child: Text(
+                                                "Don't Have an Account? Sign Up",
+                                                style: TextStyle(color: Color(0xff08BA64), fontSize: 18),
+                                              ),
+                                            ),
                                           ],
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 40,
-                                      ),
-                                      SizedBox(
-                                          width: 150,
-                                          height: 50,
-                                          child: CustomButton(
-                                            onTap: () {
-                                              login(context, authProvider);
-                                            },
-                                            title: "Continue",
-                                            size: 16,
-                                            color: PColor.submitButtonColor,
-                                          )),
-                                      TextButton(
-                                        onPressed: () {},
-                                        child: Text(
-                                          "Forgot password?",
-                                          style: TextStyle(color: Color(0xff08BA64), fontSize: 18),
-                                        ),
-                                      )
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ],
+                                ),
                               ),
                             ),
-                          ),
+                            SizedBox(
+                                width: 150,
+                                height: 50,
+                                child: CustomButton(
+                                  onTap: () {
+                                    login(context, authProvider);
+                                  },
+                                  title: "Continue",
+                                  size: 16,
+                                  color: PColor.submitButtonColor,
+                                )),
+                            SizedBox(height: 10),
+                          ],
                         ),
                       )),
                 ),

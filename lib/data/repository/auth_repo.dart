@@ -11,11 +11,11 @@ class AuthRepo {
 
   AuthRepo({required this.dioClient, required this.sharedPreferences});
 
-  Future<ApiResponse> signUp(String name, String phone, String email, String password) async {
+  Future<ApiResponse> signUp(String name, String phone, String email, String password, String gender, String dob,String city) async {
     Response response = Response(requestOptions: RequestOptions(path: '22222'));
     try {
       response = await dioClient.post('${AppConstant.signup}',
-          data: {"name": name, "email": email, "password": password, "phone": phone});
+          data: {"name": name, "email": email, "password": password, "phone": phone, "gender": gender, "date_of_birth": dob, "city": city});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
@@ -41,7 +41,6 @@ class AuthRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e), response);
     }
   }
-
 
   // for  user token
   Future<void> saveUserToken(String token) async {
